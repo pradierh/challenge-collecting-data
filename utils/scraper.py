@@ -79,12 +79,15 @@ class ImmoWebScraper:
         Cycle through all the search pages of immoweb, saving all the announcements found in a Data structure
         """
         # Cycle through every page in the search engine
-        for i in range(1, 50):
-            _URL = f"https://www.immoweb.be/en/search/house/for-sale?countries=BE&orderBy=relevance&page={i}"
-            self.driver.get(_URL)
-            # Search for every announcement links (30 par search page)
-            for elem in self.driver.find_elements_by_xpath("//a[@class='card__title-link']"):
-                self.data_list.append(Data(elem.get_attribute("href")))
+        for i in range(1, 334):
+            try:
+                _URL = f"https://www.immoweb.be/en/search/house/for-sale?countries=BE&orderBy=relevance&page={i}"
+                self.driver.get(_URL)
+                # Search for every announcement links (30 par search page)
+                for elem in self.driver.find_elements_by_xpath("//a[@class='card__title-link']"):
+                    self.data_list.append(Data(elem.get_attribute("href")))
+            except:
+                print("Someting went wrong in url parsing")
 
     def scrap_data(self) -> None:
         """
